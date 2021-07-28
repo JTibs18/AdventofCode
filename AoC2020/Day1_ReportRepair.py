@@ -1,5 +1,5 @@
 #Part 1 Solution
-f1 = open("day1Input.txt")
+f1 = open("day1.txt")
 nums = []
 num1 = 0
 num2 = 0
@@ -19,7 +19,7 @@ for n in nums:
 print(num1 * num2)
 
 #Part 2 Solution
-f1 = open("day1Input.txt")
+f1 = open("day1.txt")
 nums = []
 num1 = 0
 num2 = 0

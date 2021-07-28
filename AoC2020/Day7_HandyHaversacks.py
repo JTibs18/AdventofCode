@@ -1,7 +1,7 @@
 #Part 1 Solution
 import re
 
-f1 = open("day7Input.txt")
+f1 = open("day7.txt")
 bagContains = dict()
 holdBag = set()
 lineOfBags = []
@@ -42,7 +42,7 @@ while q:
 print(len(holdBag))
 
 #Part 2 Solution
-f1 = open("day7Input.txt")
+f1 = open("day7.txt")
 bagContains = dict()
 holdBag = set()
 lineOfBags = []
