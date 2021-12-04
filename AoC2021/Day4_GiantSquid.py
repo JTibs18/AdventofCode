@@ -55,6 +55,7 @@ cards = []
 allC = []
 lineCount = 0
 outputs = []
+done = False
 
 for line in f1:
     line = line.strip("\n")
@@ -88,7 +89,10 @@ for i in numbers:
                      horCount += 1
                 else:
                     sum += int(num)
-        if horCount == 5 or 5 in verticalCount:
+            if horCount == 5:
+                done = True
+        if done == True or 5 in verticalCount:
             allC.remove(card)
             outputs.append(sum * int(i))
+            done = False
 print("Part 2: ", outputs[len(outputs) -1])
