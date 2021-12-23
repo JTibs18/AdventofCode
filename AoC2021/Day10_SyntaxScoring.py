@@ -8,6 +8,7 @@ points = 0
 for line in f1:
     line = line.strip()
     brackets = []
+    
     for i in line:
         if i in chunk:
             brackets.append(i)
@@ -33,6 +34,7 @@ for line in f1:
     points = 0
     line = line.strip()
     brackets = []
+
     for i in line:
         if i in chunk:
             brackets.append(i)
