@@ -41,11 +41,15 @@ for line in f1:
                 brackets.pop()
             else:
                 corrupt = True
+
     if corrupt == False:
         brackets.reverse()
+
         for i in brackets:
             points = (5 * points) + charToPoint.get(chunk.get(i))
+
         lineScores.append(points)
+
 half = math.floor(len(lineScores) / 2)
 lineScores.sort()
 print(lineScores[half])
