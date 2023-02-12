@@ -21,8 +21,7 @@ while queue:
         break 
     else: 
         passcode = code + curPath
-        passcodeHash = hashlib.md5(passcode.encode())
-        passcodeHash = passcodeHash.hexdigest() 
+        passcodeHash = hashlib.md5(passcode.encode()).hexdigest() 
 
         if passcodeHash[0] in "bcdef" and lastElement[1] - 1 >= 0:
             queue.append(curPathCoords + [(lastElement[0], lastElement[1] - 1)])
@@ -61,8 +60,7 @@ while queue:
             longestPath = len(curPath)
     else: 
         passcode = code + curPath
-        passcodeHash = hashlib.md5(passcode.encode())
-        passcodeHash = passcodeHash.hexdigest() 
+        passcodeHash = hashlib.md5(passcode.encode()).hexdigest()
 
         if passcodeHash[0] in "bcdef" and lastElement[1] - 1 >= 0:
             queue.append(curPathCoords + [(lastElement[0], lastElement[1] - 1)])
