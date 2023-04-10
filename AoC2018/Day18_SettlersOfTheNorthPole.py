@@ -106,7 +106,7 @@ for x in range(greatestLength):
 
 print(lumberyards * woodedAcres)
 
-#Part 2 Solution # TAKES TOO LONG
+#Part 2 Solution # Takes a few seconds to run
 f1 = open("day18.txt")
 
 grid = dict() 
@@ -204,7 +204,7 @@ while minutes < 1000000000:
                 newGrid[key] = "."
         
     grid = newGrid
-    
+
     if newGrid in repeatedGrids: 
         break 
     elif newGrid in visitedGrids:
