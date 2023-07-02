@@ -44,9 +44,9 @@ f1 = open("day13.txt")
 firewallRecord = dict() 
 curSecurityScanner = dict() 
 scannerDirection = dict() 
+securityScannerAtTime = dict() 
 currentLayer = 0 
 delay = 0 
-securityScannerAtTime = dict() 
 
 for line in f1: 
     parsed = line.strip().split(": ")
