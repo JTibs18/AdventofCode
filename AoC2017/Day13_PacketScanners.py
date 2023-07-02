@@ -46,7 +46,6 @@ curSecurityScanner = dict()
 scannerDirection = dict() 
 currentLayer = 0 
 delay = 0 
-delayCount = 0 
 securityScannerAtTime = dict() 
 
 for line in f1: 
