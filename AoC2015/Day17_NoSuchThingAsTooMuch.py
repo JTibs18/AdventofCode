@@ -1,26 +1,44 @@
-#Part 1 Solution
+# Part 1 Solution
+# with help from https://stackoverflow.com/questions/34517540/find-all-combinations-of-a-list-of-numbers-with-a-given-sum
+
+import itertools
 f1 = open("day17.txt")
 
 containers = []
-ptr1 = 0 
-waysToFit = 0 
+target = 150 
 
 for line in f1:
     containers.append(int(line.strip()))
 
-containers = sorted(containers, reverse=True)
-print(containers)
+numberOfWays = len([seq for i in range(len(containers))
+                    for seq in itertools.combinations(containers, i)
+                    if sum(seq) == target
+                    ])
 
-while ptr1 < len(containers): 
-    litres = containers[ptr1]
+print(numberOfWays)
 
-    for i in range(ptr1 + 1, len(containers)):
-        if litres + containers[i] < 150:
-            litres += containers[i]
-        elif litres + containers[i] == 150:
-            waysToFit += 1
-            litres = containers[ptr1]
-    
-    ptr1 += 1 
+# Part 2 Solution
+import itertools
+f1 = open("day17.txt")
 
-print(waysToFit)
+containers = []
+target = 150 
+minContainers = 1000000
+minCount = 0 
+
+for line in f1:
+    containers.append(int(line.strip()))
+
+combinations = [(seq, i) for i in range(len(containers))
+                    for seq in itertools.combinations(containers, i)
+                    if sum(seq) == target
+                ]
+
+for i in combinations: 
+    if i[1] < minContainers:
+        minContainers = i[1]
+        minCount = 1 
+    elif i[1] == minContainers: 
+        minCount += 1
+
+print(minCount)
