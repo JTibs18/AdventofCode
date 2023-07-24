@@ -29,16 +29,16 @@ minCount = 0
 for line in f1:
     containers.append(int(line.strip()))
 
-combinations = [(seq, i) for i in range(len(containers))
+combinations = [i for i in range(len(containers))
                     for seq in itertools.combinations(containers, i)
                     if sum(seq) == target
                 ]
 
 for i in combinations: 
-    if i[1] < minContainers:
-        minContainers = i[1]
+    if i < minContainers:
+        minContainers = i
         minCount = 1 
-    elif i[1] == minContainers: 
+    elif i == minContainers: 
         minCount += 1
 
 print(minCount)
