@@ -1,7 +1,7 @@
 #Part 1 Solution
 f1 = open("day9.txt")
 
-decomp = 0
+decompressedLength = 0
 marker = False
 skip = 0
 
@@ -15,56 +15,47 @@ for indx, char in enumerate(line):
         skipVal = int(mark[0])
         multi = int(mark[1].split(")")[0])
         skip += skipVal
-        decomp += skipVal * multi
+        decompressedLength += skipVal * multi
     elif marker == True and char == ")":
         marker = False
     elif skip > 0 and marker == False:
         skip -= 1
     elif marker == False:
-        decomp += 1
-print(decomp)
+        decompressedLength += 1
+print(decompressedLength)
 
 #Part 2 Solution
-
-#WORK ON THIS. OVER COUNTING BECAUSE MULTILYING BEFORE CONFIRMING NEXT CHARACTER NOT MARKER
-
 f1 = open("day9.txt")
 
-decomp = 0
+decompressedLength = 0
 marker = False
-skip = 0
+multipliers = dict()
 
 for line in f1:
     line = line.strip("\n")
 
-for indx, char in enumerate(line):
-    if char == "(" and marker == False:
-        marker = True
+for indx, char in enumerate(line): 
+    if char == "(": 
+        marker = True 
+
         mark = line[indx + 1:].split("x")
-        skipVal = int(mark[0])
+        distance = int(mark[0])
         multi = int(mark[1].split(")")[0])
+    elif char == ")": 
+        marker = False 
+        endLocation = distance + indx 
 
-        if skip > 0:
-            print("X", char)
+        if endLocation in multipliers:
+            multipliers[endLocation] *= multi 
+        else: 
+            multipliers[endLocation] = multi 
+    elif marker == False: 
+        charMulti = 1 
 
-            decomp += (multi * prevMulti)
-            skip -= (line.find(")", indx) - indx) + 1
-            if skip < 0:
-                skip = 0
-        else:
-            print("Y", char)
+        for key, value in multipliers.items(): 
+            if indx <= key:
+                charMulti *= value
+        
+        decompressedLength += charMulti
 
-            skip += skipVal
-            decomp += skipVal * multi
-    elif marker == True and char == ")":
-        marker = False
-        prevMulti = multi
-    elif skip > 0 and marker == False:
-        skip -= 1
-    elif marker == False:
-        #POSSIBLY DO MATH HERE
-        decomp += 1
-        print(char)
-
-    print(decomp)
-print(decomp)
+print(decompressedLength)  
