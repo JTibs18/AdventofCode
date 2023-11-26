@@ -66,6 +66,7 @@ def doMath2(arr):
     
     total = int(newArray[0])
     indx = 1
+    
     while indx < len(newArray):
             if newArray[indx] == "*":
                 total *= int(newArray[indx + 1])
