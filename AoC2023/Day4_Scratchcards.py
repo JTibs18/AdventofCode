@@ -47,9 +47,7 @@ for key in sortedCards:
         if nums != "" and nums in cards[key][0]: 
             curPoints += 1
 
-    multi = totalScratchCards[key]
-
-    for count in range(key + 1, curPoints + key + 1):
-        totalScratchCards[count] += multi
+    for card in range(key + 1, curPoints + key + 1):
+        totalScratchCards[card] += totalScratchCards[key]
 
 print(sum(totalScratchCards.values()))
