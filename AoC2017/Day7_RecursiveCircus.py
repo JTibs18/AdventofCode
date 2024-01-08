@@ -6,11 +6,14 @@ programs = {}
 for line in f1:
     line = line.strip().split("(")
     child = line[1].strip().split("> ")
+
     if "-" in line[1]:
         children = child[1].split(", ")
         parent = line[0].strip()
+        
         if parent not in programs:
             programs[parent] = 0
+
         for i in children:
             programs[i] = 1
 
@@ -21,57 +24,53 @@ for key, value in programs.items():
 #Part 2 Solution
 f1 = open("day7.txt")
 
-programWeight = {}
-parChild = {}
+programsGraph = dict()
+programsCount = dict()
+programWeights = dict()
 
+# parse input
 for line in f1:
     line = line.strip().split("(")
     child = line[1].strip().split("> ")
+    weight = int(line[1].split(")")[0])
 
-    c = child[0].strip(") -")
     parent = line[0].strip()
-
-    programWeight[parent] = int(c)
-    # print(programWeight)
-
+    programWeights[parent] = weight
+    
     if "-" in line[1]:
         children = child[1].split(", ")
-        # print(children)
-        parChild[parent] = children
-# print(parChild)
 
-for i in parChild:
-    val = set()
-    for j in parChild.get(i):
-        # print(j)
-        if j in parChild:
-            # print("TRUE")
-            sum = 0
-            for x in parChild.get(j):
-                # print(programWeight.get(x))
-                sum += programWeight.get(x)
-            sum += programWeight.get(j)
-            val.add(sum)
+        if parent not in programsGraph:
+            programsGraph[parent] = children
+            programsCount[parent] = 0
+        
+        for i in children:
+            programs[i] = 1 
 
-            # parChild[i].extend(parChild.get(j))
-        else:
-            val.add(programWeight.get(j))
-    if len(val) > 1:
-        # print("THIS", val)
-        v = list(val)
-        diff = abs(v[0] - v[1])
-        print("DIFF", diff, val)
-        #PROBLEM : THIS SHOULD ONLY HAPPEN ONCE BUT HAPPENS MANY TIMES IN THE GIVEN INPUT
-        #ONLY DEPTH OF 2 IS CONSIDERED, HIGHER DEPTHS OF TOWERS ARE NOT CONSIDERED :/ 
+# find root 
+for key, value in programs.items():
+    if value == 0:
+        root = key         
 
+# find different weight 
+def helper(curNode):
+    if curNode not in programsGraph:
+        return (programWeights[curNode], programWeights[curNode])
+    
+    weights = []
 
+    for node in programsGraph[curNode]:
+        res = helper(node)
+        if res == None:
+            return 
+        
+        weights.append(res)
 
-# print(parChild)
-
-# for i in parChild:
-#     val = set()
-#     for j in parChild.get(i):
-#         val.add(programWeight.get(j))
-#     print("V", val)
-#     print(i)
-#     print(parChild.get(i))
+    for totalWeight, _ in weights:
+        if totalWeight != weights[0][0]:
+            print(weights[0][1] - (weights[0][0] - totalWeight))
+            return 
+            
+    return (sum([x[0] for x in weights]) + programWeights[curNode], programWeights[curNode])
+        
+helper(root)
