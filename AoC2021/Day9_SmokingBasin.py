@@ -21,6 +21,7 @@ for indxI, val in enumerate(fullMap):
             scoreCard.append(False)
         if indxI - 1 >= 0 and v >= fullMap[indxI - 1][indxJ]:
             scoreCard.append(False)
+
         if False not in scoreCard:
             lowPoints.append(v)
 
@@ -30,7 +31,10 @@ print(riskLevel)
 #Part 2 Solution
 f1 = open("day9.txt")
 fullMap = []
-lowPoints = []
+queue = []
+basins = dict()
+visited = set()
+basinCount = 0
 
 for line in f1:
     map = list(line.strip())
@@ -50,13 +54,35 @@ for indxI, val in enumerate(fullMap):
             scoreCard.append(False)
         if indxI - 1 >= 0 and v >= fullMap[indxI - 1][indxJ]:
             scoreCard.append(False)
+
         if False not in scoreCard:
-            lowPoints.append(v)
+            queue.append(((indxI, indxJ), basinCount))
+            basinCount += 1 
 
-for
+while queue:
+    coord, basinNum = queue.pop(0)
+    visited.add(tuple(coord))
 
+    if basinNum in basins:
+        basins[basinNum].append(fullMap[coord[0]][coord[1]])
+    else:
+        basins[basinNum] = [fullMap[coord[0]][coord[1]]]
 
-#find low points
-#find points around low pounts (above, below, left, right)
-#not including low point, test if surround points are low points
-#if a low point, add surrounding points to queue to test
+    if coord[1] + 1 < len(fullMap[coord[0]]) and fullMap[coord[0]][coord[1] + 1] != 9 and (coord[0], coord[1] + 1) not in visited:
+        queue.append(((coord[0], coord[1] + 1), basinNum))
+        visited.add((coord[0], coord[1] + 1))
+    if coord[1] - 1 >= 0 and fullMap[coord[0]][coord[1] - 1] != 9 and (coord[0], coord[1] - 1) not in visited:
+        queue.append(((coord[0], coord[1] - 1), basinNum))
+        visited.add((coord[0], coord[1] - 1))
+    if coord[0] + 1 < len(fullMap) and fullMap[coord[0] + 1][coord[1]] != 9 and (coord[0] + 1, coord[1]) not in visited:
+        queue.append(((coord[0] + 1, coord[1]), basinNum))
+        visited.add((coord[0] + 1, coord[1]))
+    if coord[0] - 1 >= 0 and fullMap[coord[0] - 1][coord[1]] != 9 and (coord[0] - 1, coord[1]) not in visited:
+        queue.append(((coord[0] - 1, coord[1]), basinNum))
+        visited.add((coord[0] - 1, coord[1]))
+
+basinSize = [len(x) for x in basins.values()]
+basinSize.sort()
+basinSize = basinSize[::-1]
+
+print(basinSize[0] * basinSize[1] * basinSize[2])
