@@ -18,7 +18,7 @@ for i in range(numDays):
 
 print(sum(fishState))
 
-# Part 1 Solution
+# Part 2 Solution
 f1 = open("day6.txt")
 
 fishState = [0] * 9
